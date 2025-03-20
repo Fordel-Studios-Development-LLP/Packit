@@ -7,7 +7,7 @@ import {
   TableBody,
   Table,
   TableCell,
-} from "@/components/ui/table";
+} from "../../../../components/ui/table";
 import { ProductItemComponent } from "./product-item.component";
 import { ProductEntity } from "../../domain/entity/product.entity";
 

@@ -1,4 +1,4 @@
-import { productSlice } from "@/modules/products/presentation/state/ProductSlice";
+import { productSlice } from "../modules/products/presentation/state/ProductSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 // Import other reducers as needed

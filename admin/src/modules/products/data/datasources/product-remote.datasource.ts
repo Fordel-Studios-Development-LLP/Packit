@@ -1,8 +1,8 @@
 // admin / src / modules / products / data / datasources / product-remote.datasource.ts;
 
-import { AxiosClient } from "@/commons/utils/AxiosClient";
+import { AxiosClient } from "../../../../commons/utils/AxiosClient";
 import { ProductModel } from "../models/product.model";
-import { ApiEndpoints } from "@/commons/constants/ApiEndpoints";
+import { ApiEndpoints } from "../../../../commons/constants/ApiEndpoints";
 import {
   CreateProductDTO,
   ProductResponseDTO,

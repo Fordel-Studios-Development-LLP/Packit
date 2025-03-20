@@ -2,13 +2,13 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { ProductRepositoryImpl } from "../../data/repositories/product-repository-impl";
 import { ProductRemoteDataSource } from "../../data/datasources/product-remote.datasource";
-import { AxiosClient } from "@/commons/utils/AxiosClient";
+import { AxiosClient } from "../../../../commons/utils/AxiosClient";
 
 import { CreateProductUseCase } from "../../domain/usecases/create-product.usecase";
 import { UpdateProductUseCase } from "../../domain/usecases/update-product.usecase";
 import { GetProductsUseCase } from "../../domain/usecases/get-products.usecase";
 import { DeleteProductUseCase } from "../../domain/usecases/delete-product.usecase";
-import { AuthService } from "@/commons/utils/services/AuthService";
+import { AuthService } from "../../../../commons/utils/services/AuthService";
 
 // Create the context and define its type
 interface ProductContextType {

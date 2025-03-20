@@ -1,5 +1,5 @@
 // admin/src/modules/products/presentation/views/product.view.tsx
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../components/ui/button";
 import { ProductListComponent } from "../components/product-list.component";
 import { useProductViewModel } from "../viewmodels/product.viewmodel";
 import { ProductFormComponent } from "../components/product-form.component";

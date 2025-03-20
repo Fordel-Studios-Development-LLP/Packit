@@ -1,18 +1,17 @@
 @import "tailwindcss";
-
-/* Define theme variables */
+@config "../tailwind.config.js";
 @theme {
   --font-roboto: "Roboto", "sans-serif";
   --font-poppins: "Poppins", "sans-serif";
   --font-sora: "Sora", "sans-serif";
-  
+
   /* Breakpoints */
   --breakpoint-xs: 425px;
   --breakpoint-sm: 768px;
   --breakpoint-md: 1024px;
   --breakpoint-lg: 1240px;
   --breakpoint-xl: 1440px;
-  
+
   /* Brand Colors */
   --color-brand-primary: #069fff;
   --color-brand-secondary: #1fc2ba;
@@ -29,7 +28,7 @@
   --color-primary-800: #086ac5;
   --color-primary-900: #0d5b9b;
   --color-primary-950: #0e375d;
-  --color-primary-1000: #121B23;
+  --color-primary-1000: #121b23;
 
   /* Secondary Colors (Teal) */
   --color-secondary-50: #f1fcfb;
@@ -83,7 +82,7 @@
   --color-accent-orange-800: #933619;
   --color-accent-orange-900: #772f17;
   --color-accent-orange-950: #40160a;
-  
+
   /* Surface Colors (Grey) */
   --color-surface-50: #f6f6f9;
   --color-surface-100: #ededf1;
@@ -152,7 +151,6 @@
   --container-lg: 1240px;
   --container-xl: 1440px;
 
-
   /* Define font sizes */
   --font-size-t101: 32px;
   --font-size-t102: 32px;
@@ -160,22 +158,21 @@
   --font-size-t201: 28px;
   --font-size-t202: 28px;
   --font-size-t203: 28px;
-  
+
   /* Line Heights */
   --line-height-150: 150%;
-  
+
   /* Font Weights */
   --font-weight-600: 600;
   --font-weight-700: 700;
   --font-weight-800: 800;
   --font-weight-400: 400;
   --font-weight-300: 300;
-  
+
   /* Letter Spacing */
   --letter-spacing-4: 4%;
   --letter-spacing-2: 2%;
 }
-
 
 @layer base {
   .t101 {
@@ -321,5 +318,3 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
-
-
