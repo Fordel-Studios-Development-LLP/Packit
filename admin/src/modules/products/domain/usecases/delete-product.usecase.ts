@@ -1,3 +1,4 @@
+// admin/src/modules/products/domain/usecases/delete-product.usecase.ts
 import { ProductRepository } from "../repositories/product.repository";
 
 export class DeleteProductUseCase {

@@ -1,3 +1,4 @@
+// admin/src/modules/products/presentation/components/product-list.component.tsx
 import React from "react";
 import {
   TableHead,

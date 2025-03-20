@@ -1,3 +1,4 @@
+// admin / src / modules / products / data / repositories / product-repository-impl.ts;
 import {
   ProductEntity,
   ProductEntityProps,

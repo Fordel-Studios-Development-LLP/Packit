@@ -1,3 +1,5 @@
+// admin/src/modules/products/domain/usecases/get-products.usecase.ts
+
 import { ProductEntity } from "../entity/product.entity";
 import { ProductRepository } from "../repositories/product.repository";
 

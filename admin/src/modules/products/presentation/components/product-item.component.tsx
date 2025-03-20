@@ -1,3 +1,4 @@
+// admin/src/modules/products/presentation/components/product-item.component.tsx
 import React from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";

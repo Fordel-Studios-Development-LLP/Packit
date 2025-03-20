@@ -1,3 +1,5 @@
+// admin/src/modules/products/domain/repositories/product.repository.ts
+
 import { ProductEntity } from "../entity/product.entity";
 
 export interface ProductRepository {

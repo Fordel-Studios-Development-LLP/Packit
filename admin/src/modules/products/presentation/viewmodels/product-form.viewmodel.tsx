@@ -1,8 +1,12 @@
+// admin/src/modules/products/presentation/viewmodels/product-form.viewmodel.tsx
 import { useState, useEffect } from "react";
+import { useProductContext } from "../providers/product.provider"; // Use the context to get use cases
 import { ProductEntity } from "../../domain/entity/product.entity";
-import { useProductContext } from "../providers/product.provider";
+import { useDispatch } from "react-redux";
+import { addProduct, updateProduct } from "../state/ProductSlice";
 
 export interface ProductFormState {
+  id: string;
   name: string;
   price: string;
   description: string;
@@ -13,6 +17,7 @@ export interface ProductFormState {
 
 export interface ProductFormViewModel {
   state: ProductFormState;
+  setId?: (id: string) => void;
   setName: (name: string) => void;
   setPrice: (price: string) => void;
   setDescription: (description: string) => void;
@@ -26,9 +31,11 @@ export const useProductFormViewModel = (
   initialProduct?: ProductEntity,
   onSubmitSuccess?: () => void
 ): ProductFormViewModel => {
-  const { createProduct, updateProduct, isLoading } = useProductContext();
+  const { createProductUseCase, updateProductUseCase } = useProductContext(); // Access the use cases from context
 
+  const dispatch = useDispatch();
   const [state, setState] = useState<ProductFormState>({
+    id: "",
     name: "",
     price: "",
     description: "",
@@ -39,12 +46,15 @@ export const useProductFormViewModel = (
 
   useEffect(() => {
     if (initialProduct) {
-      setState((prev) => ({
-        ...prev,
+      setState({
+        id: initialProduct.id,
         name: initialProduct.name,
         price: initialProduct.price,
         description: initialProduct.description,
-      }));
+        productImgs: [],
+        error: "",
+        isLoading: false,
+      });
     }
   }, [initialProduct]);
 
@@ -64,18 +74,9 @@ export const useProductFormViewModel = (
     setState((prev) => ({ ...prev, productImgs }));
   };
 
-  const setError = (error: string) => {
-    setState((prev) => ({ ...prev, error }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setProductImgs(Array.from(e.target.files));
-    }
-  };
-
   const resetForm = () => {
     setState({
+      id: "",
       name: "",
       price: "",
       description: "",
@@ -85,29 +86,52 @@ export const useProductFormViewModel = (
     });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProductImgs(Array.from(e.target.files));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!initialProduct && state.productImgs.length === 0) {
-      setError("Please select image files.");
+      setState((prev) => ({ ...prev, error: "Please select image files." }));
       return;
     }
 
-    setError("");
-    setState((prev) => ({ ...prev, isLoading: true }));
+    setState((prev) => ({ ...prev, error: "", isLoading: true }));
 
     try {
+      // Create a plain object for product data
       const productData = {
+        id: state.id,
         name: state.name,
         price: state.price,
         description: state.description,
-        images: initialProduct?.images || [],
+        images: [], // You can handle images later, if needed
       };
 
+      let product;
+
+      // Convert to ProductEntity before passing it to the use case
+      const productEntity = new ProductEntity(productData);
+
       if (initialProduct?.id) {
-        await updateProduct(initialProduct.id, productData, state.productImgs);
+        // Use the entity to update the product
+        product = await updateProductUseCase.execute(
+          initialProduct.id,
+          productEntity.toModel(), // Convert ProductEntity to ProductModel
+          state.productImgs
+        );
+        dispatch(updateProduct(product)); // Update the state in Redux
       } else {
-        await createProduct(productData, state.productImgs);
+        // Use the entity to create a new product
+        product = await createProductUseCase.execute(
+          productEntity,
+          state.productImgs
+        );
+        dispatch(addProduct(product)); // Add the new product to Redux
       }
 
       resetForm();
@@ -115,7 +139,7 @@ export const useProductFormViewModel = (
         onSubmitSuccess();
       }
     } catch (error) {
-      setError("An error occurred while saving the product");
+      setState((prev) => ({ ...prev, error: "An error occurred" }));
       console.error(error);
     } finally {
       setState((prev) => ({ ...prev, isLoading: false }));

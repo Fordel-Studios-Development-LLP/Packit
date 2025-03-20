@@ -1,3 +1,5 @@
+// admin / src / modules / products / data / datasources / product-remote.datasource.ts;
+
 import { AxiosClient } from "@/commons/utils/AxiosClient";
 import { ProductModel } from "../models/product.model";
 import { ApiEndpoints } from "@/commons/constants/ApiEndpoints";
@@ -15,7 +17,7 @@ export class ProductRemoteDataSource {
       const response = await this.axiosClient.get(
         "/assets/data/" + ApiEndpoints.PRODUCTS.path + ".json",
         {
-          baseURL: "http://localhost:3000",
+          baseURL: "http://localhost:5173",
         }
       );
 

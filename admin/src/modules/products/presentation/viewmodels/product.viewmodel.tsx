@@ -1,6 +1,6 @@
+// admin/src/modules/products/presentation/viewmodels/product.viewmodel.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useProductListViewModel } from "./product-list.viewmodel";
 
 export interface ProductViewModel {
@@ -15,7 +15,6 @@ export const useProductViewModel = (): ProductViewModel => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productListViewModel = useProductListViewModel();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const openModal = () => {

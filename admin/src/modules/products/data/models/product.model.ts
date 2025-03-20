@@ -1,3 +1,4 @@
+// admin / src / modules / products / data / models / product.model.ts;
 import { ImageModel } from "@/commons/models/ImageModel";
 import { ProductEntity } from "../../domain/entity/product.entity";
 

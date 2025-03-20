@@ -1,4 +1,4 @@
-// DTOs (Data Transfer Objects) for product operations
+// admin / src / modules / products / data / dto / product.dto.ts;
 
 export interface ImageDTO {
   secure_url: string;
@@ -25,3 +25,5 @@ export interface ProductResponseDTO {
   description: string;
   productImages: ImageDTO[];
 }
+
+export interface ProductDTO extends ProductResponseDTO {}

@@ -1,3 +1,4 @@
+// admin/src/modules/products/presentation/state/ProductSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import { ProductEntity } from "../../domain/entity/product.entity";
 

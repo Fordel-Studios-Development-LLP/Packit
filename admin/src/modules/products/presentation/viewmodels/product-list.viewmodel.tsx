@@ -1,31 +1,61 @@
-import { useState } from "react";
-import { ProductDTO } from "../../data/dto/product.dto";
-import { useProductContext } from "../providers/product.provider";
+// admin/src/modules/products/presentation/viewmodels/product-list.viewmodel.tsx
+import { useState, useEffect } from "react";
+import { ProductEntity } from "../../domain/entity/product.entity"; // Import ProductEntity
+import { useProductContext } from "../providers/product.provider"; // Access use cases
 
 export interface ProductListViewModel {
-  products: ProductDTO[];
+  products: ProductEntity[]; // Change ProductDTO[] to ProductEntity[]
   isLoading: boolean;
-  handleEdit: (product: ProductDTO) => void;
+  handleEdit: (product: ProductEntity) => void; // Use ProductEntity instead of ProductDTO
   handleDelete: (productId: string) => Promise<void>;
-  selectedProduct: ProductDTO | undefined;
-  setSelectedProduct: (product: ProductDTO | undefined) => void;
+  selectedProduct: ProductEntity | undefined; // Use ProductEntity instead of ProductDTO
+  setSelectedProduct: (product: ProductEntity | undefined) => void; // Use ProductEntity instead of ProductDTO
 }
 
 export const useProductListViewModel = (): ProductListViewModel => {
-  const { products, isLoading, deleteProduct } = useProductContext();
+  const { getProductsUseCase, deleteProductUseCase } = useProductContext(); // Use cases for fetching and deleting products
+  const [products, setProducts] = useState<ProductEntity[]>([]); // Use ProductEntity[]
   const [selectedProduct, setSelectedProduct] = useState<
-    ProductDTO | undefined
-  >(undefined);
+    ProductEntity | undefined
+  >(undefined); // Use ProductEntity
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleEdit = (product: ProductDTO) => {
+  const handleEdit = (product: ProductEntity) => {
     setSelectedProduct(product);
   };
 
   const handleDelete = async (productId: string) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      await deleteProduct(productId);
+      setIsLoading(true);
+      try {
+        await deleteProductUseCase.execute(productId);
+        setProducts((prev) =>
+          prev.filter((product) => product.id !== productId)
+        );
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
+
+  // Fetch the products initially when the viewmodel is initialized
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    try {
+      const productList = await getProductsUseCase.execute(); // Assuming this returns ProductEntity[]
+      setProducts(productList);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(); // Call fetchProducts when the component mounts or the viewmodel is initialized
+  }, []);
 
   return {
     products,

@@ -26,7 +26,7 @@ export class AxiosClient {
   constructor(authService: AuthService) {
     this.authService = authService;
     this.client = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+      baseURL: "http://192.168.1.3:5173",
       timeout: 10000,
       withCredentials: false,
     });
